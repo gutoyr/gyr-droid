@@ -10,14 +10,14 @@ LOG = logging.getLogger(__name__)
 
 def run(args):
     fastboot_args_list = [
-            '-w',
-            'erase userdata',
-            'erase cache',
-            'erase modemst1',
-            'erase modemst2',
-            'oem fb_mode_clear',
-            'reboot',
-            ]
+        '-w',
+        'erase userdata',
+        'erase cache',
+        'erase modemst1',
+        'erase modemst2',
+        'oem fb_mode_clear',
+        'reboot',
+    ]
 
     if is_secure_device():
         LOG.info("SECURE DEVICE")
@@ -31,6 +31,6 @@ def run(args):
 
     resp = raw_input("Is device in fastboot mode? [Y/n] ")
 
-    if 'n' != resp:
+    if resp != 'n':
         for fastboot_args in fastboot_args_list:
             fastboot(fastboot_args)

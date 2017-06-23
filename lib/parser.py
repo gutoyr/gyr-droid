@@ -1,5 +1,4 @@
 import argparse
-import sys
 
 from lib import logger
 
@@ -12,13 +11,13 @@ COMMON_ARGS = {
 
 SUBCOMMANDS = [
     ('cleanup', 'Erase cache and user data from device.',
-        [COMMON_ARGS]),
+     [COMMON_ARGS]),
     ('device-info', 'Retrieve device information.',
-        [COMMON_ARGS]),
+     [COMMON_ARGS]),
     ('screenshot', 'Take screenshots from current device screen.',
-        [COMMON_ARGS]),
+     [COMMON_ARGS]),
     ('teste', 'Used for testing purposed only.',
-        [COMMON_ARGS]),
+     [COMMON_ARGS]),
 ]
 
 

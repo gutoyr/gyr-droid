@@ -24,4 +24,4 @@ if __name__ == '__main__':
         subcommand = args.get('subcommand')
         SUBCOMMANDS[subcommand].run(args)
     except exception.BaseException as e:
-        LOG.exception("Subcommand {} failed.".format(subcommand))
+        LOG.exception("Subcommand %s failed.", subcommand)

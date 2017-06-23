@@ -18,10 +18,10 @@ def run(args):
         secure,
         info_dict['ro.build.type'],
         info_dict['ro.build.id']
-        )
+    )
 
     cont = True
-    while True == cont:
-        LOG.info("SCREENSHOT SAVED AS {}".format(take_screenshot(filename)))
+    while cont:
+        LOG.info("SCREENSHOT SAVED AS %s", take_screenshot(filename))
         resp = raw_input("Take another screenshot? [Y/n] ")
-        cont = "n" != resp
+        cont = resp != 'n'

@@ -16,12 +16,10 @@ class Logger(object):
         sh.setFormatter(logging.Formatter('%(message)s'))
         logger.addHandler(sh)
 
-        if log_file_path:
-            log_dir = os.path.dirname(log_file_path)
-        else:
+        if log_file_path is None:
             log_file_path = "dt.log"
 
-        logger.info("Logs available at %s" % log_file_path)
+        logger.info("Logs available at %s", log_file_path)
 
         rfh = logging.handlers.RotatingFileHandler(
             log_file_path, maxBytes=0, backupCount=1)
