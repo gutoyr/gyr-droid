@@ -44,10 +44,7 @@ class Parser(object):
         self.parser.add_argument('-l', '--log',
                                  help='Enable log to file '
                                       '(default logfile: gdt.log)',
-                                 metavar='log_file_name',
-                                 nargs='?',
-                                 const='gdt.log',
-                                 default=None)
+                                 action='store_true')
         self.parser.add_argument('-v', '--verbose',
                                  help='Verbose mode',
                                  action='store_true')
@@ -70,5 +67,5 @@ class Parser(object):
 def get_args():
     line_parser = Parser()
     args = line_parser.parse()
-    logger.Logger(verbose=args['verbose'])
+    logger.Logger(enable_log=args.get('log'), verbose=args.get('verbose'))
     return args

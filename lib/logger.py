@@ -3,8 +3,11 @@ import logging.handlers
 import sys
 
 
+LOG_FILE = './gdt.log'
+
+
 class Logger(object):
-    def __init__(self, log_file_path=None, verbose=False):
+    def __init__(self, enable_log=False, verbose=False):
         logger = logging.getLogger()
         logger.setLevel(logging.DEBUG)
 
@@ -16,14 +19,12 @@ class Logger(object):
         sh.setFormatter(logging.Formatter('%(message)s'))
         logger.addHandler(sh)
 
-        if log_file_path is None:
-            log_file_path = "dt.log"
+        if enable_log:
+            logger.info("Logs available at %s", LOG_FILE)
 
-        logger.info("Logs available at %s", log_file_path)
-
-        rfh = logging.handlers.RotatingFileHandler(
-            log_file_path, maxBytes=0, backupCount=1)
-        rfh.setLevel(logging.DEBUG)
-        rfh.setFormatter(logging.Formatter(
-            '%(asctime)s | %(levelname)s | %(name)s: %(message)s'))
-        logger.addHandler(rfh)
+            rfh = logging.handlers.RotatingFileHandler(
+                LOG_FILE, maxBytes=0, backupCount=1)
+            rfh.setLevel(logging.DEBUG)
+            rfh.setFormatter(logging.Formatter(
+                '%(asctime)s | %(levelname)s | %(name)s: %(message)s'))
+            logger.addHandler(rfh)
