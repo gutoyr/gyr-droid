@@ -10,7 +10,7 @@ class BaseException(Exception):
         super(BaseException, self).__init__(message)
 
 
-class SubprocessError(BaseException):
+class SubcommandError(BaseException):
     DEFAULT_MESSAGE = (
         "cmd: %(cmd)s\n"
         "return code: %(returncode)i\n"
