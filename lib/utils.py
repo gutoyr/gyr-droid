@@ -1,9 +1,8 @@
 import logging
-import os
 import subprocess
 import sys
-import time
 
+from .exception import MissingFilenameError
 from .exception import SubcommandError
 
 
@@ -83,11 +82,9 @@ def get_info():
     return info_dict
 
 
-def take_screenshot(filename=None, timestamp=True):
-    filename = "screenshot" if filename is None else filename
-    if timestamp:
-        filename, file_extension = os.path.splitext(filename)
-        filename = "{}-{}{}".format(filename, time.time(), file_extension)
+def take_screenshot(filename=None):
+    if filename is None:
+        raise MissingFilenameError()
 
     args_list = [
         "shell screencap -p /sdcard/{}",
@@ -97,4 +94,3 @@ def take_screenshot(filename=None, timestamp=True):
     for args in args_list:
         run_adb(args.format(filename))
 
-    return filename

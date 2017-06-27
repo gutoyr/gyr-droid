@@ -9,13 +9,26 @@ COMMON_ARGS = {
              action='store_true'),
 }
 
+SCREENSHOT_ARGS = {
+    ('-s', '--serial',):
+        dict(help='sequence screenshot file names will use serial number '
+                  'instead of the timestamp to differ them, i.e., '
+                  '<filename>_<serial_number>.png',
+             action='store_false'),
+    ('-f', '--filename',):
+        dict(help='base file name used to store the image, '
+                  'file extension must be .png',
+             nargs=1,
+             default=None),
+}
+
 SUBCOMMANDS = [
     ('cleanup', 'Erase cache and user data from device.',
      [COMMON_ARGS]),
     ('device-info', 'Retrieve device information.',
      [COMMON_ARGS]),
     ('screenshot', 'Take screenshots from current device screen.',
-     [COMMON_ARGS]),
+     [SCREENSHOT_ARGS]),
     ('teste', 'Used for testing purposed only.',
      [COMMON_ARGS]),
 ]
@@ -28,6 +41,13 @@ class Parser(object):
         self.set_parser(SUBCOMMANDS)
 
     def set_parser(self, subcommands):
+        self.parser.add_argument('-l', '--log',
+                                 help='Enable log to file '
+                                      '(default logfile: gdt.log)',
+                                 metavar='log_file_name',
+                                 nargs='?',
+                                 const='gdt.log',
+                                 default=None)
         self.parser.add_argument('-v', '--verbose',
                                  help='Verbose mode',
                                  action='store_true')

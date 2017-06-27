@@ -16,3 +16,7 @@ class SubcommandError(BaseException):
         "return code: %(returncode)i\n"
         "stdout: %(stdout)s\n"
         "stderr: %(stderr)s\n")
+
+
+class MissingFilenameError(BaseException):
+    DEFAULT_MESSAGE = "Missing file name"
