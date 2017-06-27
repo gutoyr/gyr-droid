@@ -44,6 +44,15 @@ def run_fastboot(args):
     return run_cmd(cmd)
 
 
+def get_input(message):
+    result = None
+    if sys.version_info[0] >= 3:
+        result = input(message)
+    else:
+        result = raw_input(message)
+    return result
+
+
 def is_secure_device():
     args = 'shell getprop ro.boot.secure_hardware'
     out, _ = run_adb(args)

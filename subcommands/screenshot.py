@@ -1,6 +1,7 @@
 import logging
 
 from lib.utils import get_info
+from lib.utils import get_input
 from lib.utils import is_secure_device
 from lib.utils import take_screenshot
 
@@ -23,5 +24,5 @@ def run(args):
     cont = True
     while cont:
         LOG.info("SCREENSHOT SAVED AS %s", take_screenshot(filename))
-        resp = raw_input("Take another screenshot? [Y/n] ")
+        resp = get_input("Take another screenshot? [Y/n] ")
         cont = resp != 'n'
