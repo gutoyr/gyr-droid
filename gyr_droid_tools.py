@@ -17,11 +17,15 @@ SUBCOMMANDS = {
 }
 
 
-if __name__ == '__main__':
+def main():
     try:
         args = get_args()
         LOG.debug(args)
         subcommand = args.get('subcommand')
         SUBCOMMANDS[subcommand].run(args)
-    except exception.DroidException as e:
+    except exception.DroidException:
         LOG.exception("Subcommand %s failed.", subcommand)
+
+
+if __name__ == '__main__':
+    main()

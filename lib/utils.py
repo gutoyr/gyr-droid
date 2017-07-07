@@ -22,7 +22,7 @@ def run_cmd(cmd, **kwargs):
     output, error_output = process.communicate()
 
     if sys.version_info[0] >= 3:
-        if 'cygwin' == sys.platform:
+        if sys.platform == 'cygwin':
             output = output.decode('utf-8')
             error_output = error_output.decode('utf-8')
 
@@ -63,7 +63,7 @@ def get_input(message):
     if sys.version_info[0] >= 3:
         result = input(message)
     else:
-        result = raw_input(message)
+        result = raw_input(message) # noqa  # pylint: disable=undefined-variable
     return result
 
 
@@ -88,7 +88,7 @@ def check_fastboot():
 def is_secure_device():
     args = 'shell getprop ro.boot.secure_hardware'
     out, _ = run_adb(args)
-    return '1' == out
+    return out == '1'
 
 
 def get_info():

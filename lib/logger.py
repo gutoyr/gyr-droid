@@ -11,13 +11,13 @@ class Logger(object):
         logger = logging.getLogger()
         logger.setLevel(logging.DEBUG)
 
-        sh = logging.StreamHandler(sys.stdout)
+        stream_handler = logging.StreamHandler(sys.stdout)
         if verbose:
-            sh.setLevel(logging.DEBUG)
+            stream_handler.setLevel(logging.DEBUG)
         else:
-            sh.setLevel(logging.INFO)
-        sh.setFormatter(logging.Formatter('%(message)s'))
-        logger.addHandler(sh)
+            stream_handler.setLevel(logging.INFO)
+        stream_handler.setFormatter(logging.Formatter('%(message)s'))
+        logger.addHandler(stream_handler)
 
         if enable_log:
             logger.info("Logs available at %s", LOG_FILE)
