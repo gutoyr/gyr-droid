@@ -23,5 +23,5 @@ if __name__ == '__main__':
         LOG.debug(args)
         subcommand = args.get('subcommand')
         SUBCOMMANDS[subcommand].run(args)
-    except exception.BaseException as e:
+    except exception.DroidException as e:
         LOG.exception("Subcommand %s failed.", subcommand)

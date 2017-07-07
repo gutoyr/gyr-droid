@@ -1,4 +1,4 @@
-class BaseException(Exception):
+class DroidException(Exception):
 
     DEFAULT_MESSAGE = "Failure"
 
@@ -7,10 +7,10 @@ class BaseException(Exception):
             message = self.DEFAULT_MESSAGE % kwargs
         for key, value in kwargs.items():
             setattr(self, key, value)
-        super(BaseException, self).__init__(message)
+        super(DroidException, self).__init__(message)
 
 
-class SubcommandError(BaseException):
+class SubcommandError(DroidException):
     DEFAULT_MESSAGE = (
         "cmd: %(cmd)s\n"
         "return code: %(returncode)i\n"
@@ -18,5 +18,13 @@ class SubcommandError(BaseException):
         "stderr: %(stderr)s\n")
 
 
-class MissingFilenameError(BaseException):
+class MissingFilenameError(DroidException):
     DEFAULT_MESSAGE = "Missing file name"
+
+
+class FastbootModeError(DroidException):
+    DEFAULT_MESSAGE = "Device is not in fastboot mode."
+
+
+class AdbNotReadyError(DroidException):
+    DEFAULT_MESSAGE = "adb is not ready."

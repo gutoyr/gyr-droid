@@ -2,6 +2,7 @@ import logging
 import os
 import time
 
+from lib.utils import check_adb
 from lib.utils import get_info
 from lib.utils import get_input
 from lib.utils import is_secure_device
@@ -14,6 +15,8 @@ FILE_EXTENSION = '.png'
 
 
 def run(args):
+    check_adb()
+
     if args.get('filename') is None:
         info_dict = get_info()
         secure = 'S' if is_secure_device() else 'NS'

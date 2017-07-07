@@ -1,7 +1,10 @@
 import logging
 import subprocess
 import sys
+import time
 
+from .exception import AdbNotReadyError
+from .exception import FastbootModeError
 from .exception import MissingFilenameError
 from .exception import SubcommandError
 
@@ -43,6 +46,18 @@ def run_fastboot(args):
     return run_cmd(cmd)
 
 
+def is_fastboot_mode():
+    try:
+        check_fastboot()
+    except FastbootModeError:
+        LOG.info("Device is not in fastboot mode.")
+        resp = get_input("Reboot in fastboot mode? [Y/n] ")
+        if resp == 'n':
+            raise
+        run_adb('reboot bootloader')
+        time.sleep(3)
+
+
 def get_input(message):
     result = None
     if sys.version_info[0] >= 3:
@@ -50,6 +65,24 @@ def get_input(message):
     else:
         result = raw_input(message)
     return result
+
+
+def check_adb():
+    out, _ = run_adb('devices')
+    out_list = out.split()
+    if len(out_list) >= 5:
+        return out_list[4]
+    else:
+        raise AdbNotReadyError
+
+
+def check_fastboot():
+    out, _ = run_fastboot('devices')
+    out_list = out.split()
+    if len(out.split()) >= 2:
+        return out_list[0]
+    else:
+        raise FastbootModeError
 
 
 def is_secure_device():
