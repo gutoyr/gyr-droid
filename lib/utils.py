@@ -41,11 +41,6 @@ def run_adb(args):
     return run_cmd(cmd)
 
 
-def run_fastboot(args):
-    cmd = "fastboot {}".format(args)
-    return run_cmd(cmd)
-
-
 def is_fastboot_mode():
     try:
         check_fastboot()
@@ -74,15 +69,6 @@ def check_adb():
         return out_list[4]
     else:
         raise AdbNotReadyError
-
-
-def check_fastboot():
-    out, _ = run_fastboot('devices')
-    out_list = out.split()
-    if len(out.split()) >= 2:
-        return out_list[0]
-    else:
-        raise FastbootModeError
 
 
 def is_secure_device():
@@ -126,4 +112,3 @@ def take_screenshot(filename=None):
     ]
     for args in args_list:
         run_adb(args.format(filename))
-
