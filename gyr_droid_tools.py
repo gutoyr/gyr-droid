@@ -23,8 +23,11 @@ def main():
         LOG.debug(args)
         subcommand = args.get('subcommand')
         SUBCOMMANDS[subcommand].run(args)
-    except exception.DroidException:
-        LOG.exception("Subcommand %s failed.", subcommand)
+    except exception.DroidException as e:
+        LOG.error("Subcommand %s failed.", subcommand)
+        LOG.error(str(e))
+    except Exception:
+        LOG.exception("Unexpected error")
 
 
 if __name__ == '__main__':

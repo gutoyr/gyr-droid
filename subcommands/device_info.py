@@ -1,26 +1,41 @@
 import logging
 
-from lib.exception import AdbNotReadyError
-from lib.exception import FastbootModeError
-from lib.utils import check_adb
-from lib.utils import check_fastboot
-from lib.utils import get_info
-from lib.utils import run_fastboot as fastboot
-
+from lib.device import get_info
+from lib.device import is_fastboot_mode
+from lib.device import is_secure
 
 LOG = logging.getLogger(__name__)
 
 
 def run(args):
-    try:
-        check_adb()
-        info_dict = get_info()
-        for key, value in info_dict.items():
-            LOG.info("%s => %s", key, value)
-    except AdbNotReadyError:
-        try:
-            LOG.info(check_fastboot())
-            _, err = fastboot('getvar all')
-            LOG.info(err)
-        except FastbootModeError:
-            raise
+    key_list = [
+        'baseband',
+        'carrier',
+        'device',
+        'sku',
+        'serialno',
+        'build',
+    ]
+    if is_fastboot_mode():
+        value_list = [
+            "version-baseband",
+            "ro.carrier",
+            "product",
+            "sku",
+            "serialno",
+            "ro.build.fingerprint",
+        ]
+    else:
+        value_list = [
+            "gsm.version.baseband",
+            "ro.carrier",
+            "ro.hw.device",
+            "ro.boot.hardware.sku",
+            "ro.serialno",
+            "ro.build.fingerprint",
+        ]
+
+    info_dict = dict(zip(key_list, value_list))
+    for key, value in info_dict.items():
+        LOG.info("%s => %s", key, get_info(value))
+    LOG.info("secure => %s", is_secure())

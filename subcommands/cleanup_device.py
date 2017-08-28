@@ -1,37 +1,26 @@
 import logging
 
-from lib.utils import is_fastboot_mode
+from lib.device import change_to_fastboot_mode
+from lib.device import cleanup
+from lib.device import is_fastboot_mode
+from lib.device import reboot
 from lib.utils import get_input
-from lib.utils import is_secure_device
-from lib.utils import run_fastboot as fastboot
 
 
 LOG = logging.getLogger(__name__)
 
 
 def run(args):
-    is_fastboot_mode()
+    if not is_fastboot_mode():
+        resp = get_input("Change device to fastboot mode? [y/n] ")
+        if resp == 'y':
+            change_to_fastboot_mode()
+        else:
+            return
 
-    fastboot_args_list = [
-        '-w',
-        'erase userdata',
-        'erase cache',
-        'erase modemst1',
-        'erase modemst2',
-        'oem fb_mode_clear',
-    ]
-
-    if is_secure_device():
-        LOG.info("SECURE DEVICE")
-    else:
-        factory_reset = 'erase frp'
-        fastboot_args_list.insert(1, factory_reset)
-        LOG.info("NON SECURE DEVICE")
-
-    for fastboot_args in fastboot_args_list:
-        fastboot(fastboot_args)
+    cleanup()
     LOG.info("Cleanup device done!")
 
-    resp = get_input("Reboot device? [Y/n] ")
+    resp = get_input("Reboot device? [y/n] ")
     if resp != 'n':
-        fastboot('reboot')
+        reboot()
