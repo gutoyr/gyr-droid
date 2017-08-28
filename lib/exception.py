@@ -18,13 +18,9 @@ class SubcommandError(DroidException):
         "stderr: %(stderr)s\n")
 
 
+class UnknowCommandModuleError(DroidException):
+    DEFAULT_MESSAGE = "Neither fastboot nor adb commands can be executed"
+
+
 class MissingFilenameError(DroidException):
     DEFAULT_MESSAGE = "Missing file name"
-
-
-class FastbootModeError(DroidException):
-    DEFAULT_MESSAGE = "Device is not in fastboot mode."
-
-
-class AdbNotReadyError(DroidException):
-    DEFAULT_MESSAGE = "adb is not ready."

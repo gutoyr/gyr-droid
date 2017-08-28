@@ -1,9 +1,7 @@
 import logging
 import subprocess
 import sys
-import time
 
-from .exception import FastbootModeError
 from .exception import SubcommandError
 
 
@@ -24,6 +22,7 @@ def run_cmd(cmd, **kwargs):
             output = output.decode('utf-8')
             error_output = error_output.decode('utf-8')
 
+    LOG.debug("returncode: %s", process.returncode)
     LOG.debug("STDOUT: %s", output)
     LOG.debug("STDERR: %s", error_output)
 
@@ -34,18 +33,6 @@ def run_cmd(cmd, **kwargs):
     return output.rstrip(), error_output.rstrip()
 
 
-def is_fastboot_mode():
-    try:
-        check_fastboot()
-    except FastbootModeError:
-        LOG.info("Device is not in fastboot mode.")
-        resp = get_input("Reboot in fastboot mode? [Y/n] ")
-        if resp == 'n':
-            raise
-        run_adb('reboot bootloader')
-        time.sleep(3)
-
-
 def get_input(message):
     result = None
     if sys.version_info[0] >= 3:
@@ -53,9 +40,3 @@ def get_input(message):
     else:
         result = raw_input(message) # noqa  # pylint: disable=undefined-variable
     return result
-
-
-def is_secure_device():
-    args = 'shell getprop ro.boot.secure_hardware'
-    out, _ = run_adb(args)
-    return out == '1'
