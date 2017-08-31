@@ -50,14 +50,12 @@ def get_info(param):
     pass
 
 
-@select_cmd_module
-def take_screenshot(param):
-    pass
+def take_screenshot(filename):
+    adb.take_screenshot(filename)
 
 
-@select_cmd_module
 def cleanup():
-    pass
+    fastboot.cleanup()
 
 
 def is_fastboot_mode():
