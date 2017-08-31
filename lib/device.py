@@ -54,6 +54,30 @@ def take_screenshot(filename):
     adb.take_screenshot(filename)
 
 
+def send_keycode(keycode):
+    adb.send_keycode(keycode)
+
+
+def send_text(text):
+    adb.send_text(text)
+
+
+def send_tap(x, y):
+    adb.send_tap(x, y)
+
+
+def get_current_apk():
+    adb.get_current_apk()
+
+
+def get_current_activity():
+    adb.get_current_activity()
+
+
+def wait_for_activity(activity):
+    adb.wait_for_activity(activity)
+
+
 def cleanup():
     fastboot.cleanup()
 
