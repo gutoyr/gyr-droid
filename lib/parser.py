@@ -22,6 +22,17 @@ SCREENSHOT_ARGS = {
              default=None),
 }
 
+ACTION_ARGS = {
+    ('-m', '--module',):
+        dict(help='python module where actions where implemented.',
+             nargs=1,
+             default=None),
+    ('-a', '--actions',):
+        dict(help='list of actions to be run.',
+             nargs=1,
+             default=None),
+}
+
 SUBCOMMANDS = [
     ('cleanup', 'Erase cache and user data from device.',
      [COMMON_ARGS]),
@@ -29,6 +40,8 @@ SUBCOMMANDS = [
      [COMMON_ARGS]),
     ('screenshot', 'Take screenshots from current device screen.',
      [SCREENSHOT_ARGS]),
+    ('run-actions', 'Run actions, i.e. set of commands, in the device.',
+     [ACTION_ARGS]),
     ('teste', 'Used for testing purposed only.',
      [COMMON_ARGS]),
 ]
